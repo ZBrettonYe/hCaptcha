@@ -1,8 +1,9 @@
 <?php
 
-use Scyllaly\HCaptcha\HCaptcha;
+use ZBrettonYe\HCaptcha\HCaptcha;
+use PHPUnit\Framework\TestCase;
 
-class HCaptchaTest extends PHPUnit_Framework_TestCase
+class HCaptchaTest extends TestCase
 {
     /**
      * @var HCaptchaTest

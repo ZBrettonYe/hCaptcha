@@ -4,10 +4,11 @@ Project based on [laravel-reCAPTCHA](https://github.com/Dylanchouxd/laravel-reCA
 ## Installation
 
 ```
-composer require scyllaly/hcaptcha
+composer require zbrettonye/hcaptcha
 ```
 
 ## Laravel 5 and above
+> NOTE This package supports the auto-discovery feature of Laravel 5.5 and above, So skip these Setup instructions if you're using Laravel 5.5 and above.
 
 ### Setup
 
@@ -16,19 +17,19 @@ In `app/config/app.php` add the following :
 1- The ServiceProvider to the providers array :
 
 ```php
-Scyllaly\HCaptcha\HCaptchaServiceProvider::class,
+ZBrettonYe\HCaptcha\HCaptchaServiceProvider::class,
 ```
 
 2- The class alias to the aliases array :
 
 ```php
-'HCaptcha' => Scyllaly\HCaptcha\Facades\HCaptcha::class,
+'HCaptcha' => ZBrettonYe\HCaptcha\Facades\HCaptcha::class,
 ```
 
 3- Publish the config file
 
 ```ssh
-php artisan vendor:publish --provider="Scyllaly\HCaptcha\HCaptchaServiceProvider"
+php artisan vendor:publish --provider="ZBrettonYe\HCaptcha\HCaptchaServiceProvider"
 ```
 
 ### Configuration
@@ -163,7 +164,7 @@ require_once "vendor/autoload.php";
 
 $secret  = 'CAPTCHA-SECRET';
 $sitekey = 'CAPTCHA-SITEKEY';
-$captcha = new \Scyllaly\HCaptcha\HCaptcha($secret, $sitekey);
+$captcha = new \ZBrettonYe\HCaptcha\HCaptcha($secret, $sitekey);
 
 if (! empty($_POST)) {
     var_dump($captcha->verifyResponse($_POST['h-captcha-response']));
