@@ -2,6 +2,7 @@
 
 namespace ZBrettonYe\HCaptcha;
 
+use App\Components\CaptchaVerify;
 use Illuminate\Support\ServiceProvider;
 
 class HCaptchaServiceProvider extends ServiceProvider
@@ -38,7 +39,7 @@ class HCaptchaServiceProvider extends ServiceProvider
      */
     protected function bootConfig()
     {
-        $path = __DIR__ . '/config/config.php';
+        $path = __DIR__.'/config/config.php';
 
         $this->mergeConfigFrom($path, 'HCaptcha');
 
@@ -54,19 +55,20 @@ class HCaptchaServiceProvider extends ServiceProvider
     {
         $this->app->singleton('HCaptcha', function ($app) {
             if ($app['config']['HCaptcha.server-get-config']) {
-                $hCaptcha = \App\Components\CaptchaVerify::hCaptchaGetConfig();
+                $hCaptcha = CaptchaVerify::hCaptchaGetConfig();
+
                 return new HCaptcha(
                     $hCaptcha['secret'],
                     $hCaptcha['sitekey'],
                     $hCaptcha['options']
                 );
-            } else {
-                return new HCaptcha(
-                    $app['config']['HCaptcha.secret'],
-                    $app['config']['HCaptcha.sitekey'],
-                    $app['config']['HCaptcha.options']
-                );
             }
+
+            return new HCaptcha(
+                $app['config']['HCaptcha.secret'],
+                $app['config']['HCaptcha.sitekey'],
+                $app['config']['HCaptcha.options']
+            );
         });
     }
 
