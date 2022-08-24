@@ -70,6 +70,8 @@ class HCaptchaServiceProvider extends ServiceProvider
                 $app['config']['HCaptcha.options']
             );
         });
+
+        $this->app->alias('HCaptcha', HCaptcha::class);
     }
 
     /**
