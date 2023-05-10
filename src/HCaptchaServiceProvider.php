@@ -17,7 +17,7 @@ class HCaptchaServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application events.
      */
-    public function boot()
+    public function boot(): void
     {
         $app = $this->app;
 
@@ -37,7 +37,7 @@ class HCaptchaServiceProvider extends ServiceProvider
     /**
      * Booting configure.
      */
-    protected function bootConfig()
+    protected function bootConfig(): void
     {
         $path = __DIR__.'/config/config.php';
 
@@ -51,7 +51,7 @@ class HCaptchaServiceProvider extends ServiceProvider
     /**
      * Register the service provider.
      */
-    public function register()
+    public function register(): void
     {
         $this->app->singleton('HCaptcha', function ($app) {
             if ($app['config']['HCaptcha.server-get-config']) {
@@ -79,7 +79,7 @@ class HCaptchaServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function provides()
+    public function provides(): array
     {
         return ['HCaptcha'];
     }
