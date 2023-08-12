@@ -18,7 +18,7 @@ class HCaptchaTest extends TestCase
 
     public function testJsLink()
     {
-        self::assertTrue($this->captcha instanceof hCaptcha);
+        self::assertInstanceOf(HCaptcha::class, $this->captcha);
 
         $simple = '<script src="https://hcaptcha.com/1/api.js?" async defer></script>'."\n";
         $withLang = '<script src="https://hcaptcha.com/1/api.js?hl=vi" async defer></script>'."\n";
@@ -31,7 +31,7 @@ class HCaptchaTest extends TestCase
 
     public function testDisplay()
     {
-        self::assertTrue($this->captcha instanceof hCaptcha);
+        self::assertInstanceOf(HCaptcha::class, $this->captcha);
 
         $simple = '<div data-sitekey="{site-key}" class="h-captcha"></div>';
         $withAttrs = '<div data-theme="light" data-sitekey="{site-key}" class="h-captcha"></div>';
@@ -42,7 +42,7 @@ class HCaptchaTest extends TestCase
 
     public function testdisplaySubmit()
     {
-        self::assertTrue($this->captcha instanceof hCaptcha);
+        self::assertInstanceOf(HCaptcha::class, $this->captcha);
 
         $javascript = '<script>function onSubmittest(){document.getElementById("test").submit();}</script>';
         $simple = '<button data-callback="onSubmittest" data-sitekey="{site-key}" class="h-captcha"><span>submit</span></button>';
@@ -55,7 +55,7 @@ class HCaptchaTest extends TestCase
 
     public function testdisplaySubmitWithCustomCallback()
     {
-        self::assertTrue($this->captcha instanceof hCaptcha);
+        self::assertInstanceOf(HCaptcha::class, $this->captcha);
 
         $withAttrs = '<button data-theme="light" class="h-captcha 123" data-callback="onSubmitCustomCallback" data-sitekey="{site-key}"><span>submit123</span></button>';
 
