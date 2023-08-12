@@ -2,7 +2,6 @@
 
 namespace ZBrettonYe\HCaptcha;
 
-use App\Components\CaptchaVerify;
 use Illuminate\Support\ServiceProvider;
 
 class HCaptchaServiceProvider extends ServiceProvider
@@ -55,7 +54,7 @@ class HCaptchaServiceProvider extends ServiceProvider
     {
         $this->app->singleton('HCaptcha', function ($app) {
             if ($app['config']['HCaptcha.server-get-config']) {
-                $hCaptcha = CaptchaVerify::hCaptchaGetConfig();
+                $hCaptcha = \App\Components\CaptchaVerify::hCaptchaGetConfig();
 
                 return new HCaptcha(
                     $hCaptcha['secret'],

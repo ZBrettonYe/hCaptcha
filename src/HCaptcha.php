@@ -69,7 +69,7 @@ class HCaptcha
     {
         $attributes = $this->prepareAttributes($attributes);
 
-        return '<div'.$this->buildAttributes($attributes).'></div>';
+        return '<div '.$this->buildAttributes($attributes).'></div>';
     }
 
     /**
@@ -102,10 +102,10 @@ class HCaptcha
         $html = [];
 
         foreach ($attributes as $key => $value) {
-            $html[] = $key.'="'.$value.'"';
+            $html[] = "$key=\"$value\"";
         }
 
-        return count($html) ? ' '.implode(' ', $html) : '';
+        return implode(' ', $html);
     }
 
     /**
@@ -132,7 +132,7 @@ class HCaptcha
 
         $attributes = $this->prepareAttributes($attributes);
 
-        $button = sprintf('<button%s><span>%s</span></button>', $this->buildAttributes($attributes), $text);
+        $button = sprintf('<button %s><span>%s</span></button>', $this->buildAttributes($attributes), $text);
 
         return $button.$javascript;
     }
@@ -220,7 +220,7 @@ class HCaptcha
         }
 
         $verifyResponse = $this->sendRequestVerify([
-            'secret'   => $this->secret,
+            'secret' => $this->secret,
             'response' => $response,
             'remoteip' => $clientIp,
         ]);

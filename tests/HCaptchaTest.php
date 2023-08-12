@@ -10,7 +10,7 @@ class HCaptchaTest extends TestCase
      */
     private $captcha;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->captcha = new hCaptcha('{secret-key}', '{site-key}');
