@@ -3,6 +3,7 @@
 namespace ZBrettonYe\HCaptcha;
 
 use GuzzleHttp\Client;
+use http\Exception\RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 
 class HCaptcha
@@ -34,7 +35,7 @@ class HCaptcha
      *
      * @var array
      */
-    private $verifiedResponses = '';
+    private $verifiedResponses = [];
 
     /**
      * HCaptcha.
@@ -123,11 +124,7 @@ class HCaptcha
         if (! isset($attributes['data-callback'])) {
             $functionName = 'onSubmit'.str_replace(['-', '=', '\'', '"', '<', '>', '`'], '', $formIdentifier);
             $attributes['data-callback'] = $functionName;
-            $javascript = sprintf(
-                '<script>function %s(){document.getElementById("%s").submit();}</script>',
-                $functionName,
-                $formIdentifier
-            );
+            $javascript = sprintf('<script>function %s(){document.getElementById("%s").submit();}</script>', $functionName, $formIdentifier);
         }
 
         $attributes = $this->prepareAttributes($attributes);
@@ -194,10 +191,7 @@ class HCaptcha
      */
     public function verifyRequest(Request $request): bool
     {
-        return $this->verifyResponse(
-            $request->get('h-captcha-response'),
-            $request->getClientIp()
-        );
+        return $this->verifyResponse($request->get('h-captcha-response'), $request->getClientIp());
     }
 
     /**
@@ -226,6 +220,19 @@ class HCaptcha
         ]);
 
         if (isset($verifyResponse['success']) && $verifyResponse['success'] === true) {
+            // Check score if it's enabled.
+            $isScoreVerificationEnabled = config('HCaptcha.score_verification', false);
+
+            if ($isScoreVerificationEnabled) {
+                if (! array_key_exists('score', $verifyResponse)) {
+                    throw new RuntimeException('Score Verification is an exclusive Enterprise feature! Moreover, make sure you are sending the remoteip in your request payload!');
+                }
+
+                if ($verifyResponse['score'] > config('HCaptcha.score_threshold', 0.7)) {
+                    return false;
+                }
+            }
+
             // A response can only be verified once from hCaptcha, so we need to
             // cache it to make it work in case we want to verify it multiple times.
             $this->verifiedResponses = $response;

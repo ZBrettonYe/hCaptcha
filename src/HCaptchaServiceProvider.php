@@ -53,7 +53,7 @@ class HCaptchaServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton('HCaptcha', function ($app) {
-            if ($app['config']['HCaptcha.server-get-config']) {
+            if ($app['config']['HCaptcha.get_config_method']) {
                 $hCaptcha = \App\Components\CaptchaVerify::hCaptchaGetConfig();
 
                 return new HCaptcha(
